@@ -12,7 +12,7 @@ Then visit http://localhost:8000. The complete folder can be deployed to any sta
 
 ## Prayer flow
 
-Oraciones iniciales → five mysteries → Oraciones finales → Letanías de la Santísima Virgen → Cierre.
+Oraciones iniciales → five mysteries → Oraciones finales → Letanías de la Santísima Virgen → Cierre → Consagración.
 
 The mysteries use the visitor's local date: Gozosos on Monday/Saturday, Dolorosos on Tuesday/Friday, Gloriosos on Wednesday/Sunday, and Luminosos on Thursday. A prayer session keeps its selected group until INICIO starts it again. SIGUE appears after the prayer text. INICIO is always visible. Browser Back/Forward and page links work through URL hashes.
 
@@ -66,3 +66,9 @@ The top-left menu opens Presentación, Recomendaciones Previas, Rosario, Consagr
 Edit Spanish and English supplementary content in `js/pages.js`. Menu labels live in `js/locales.js`; URL routing is defined in `js/navigation.js`. Links use hashes, so no server rewrite configuration is required. Direct links, refresh, and browser Back/Forward work on all pages. The farewell song has a direct link at `#cancionero/adios-reina-del-cielo`.
 
 The songbook uses two columns on wider screens. Recibir el Apostolado has separate Sí/No columns with checkmark/cross bullets. Both layouts stack on narrow screens. English song lyrics are translations of the supplied Spanish text.
+
+## Rosary navigation
+
+The rosary has ten pages. After Cierre, SIGUE opens Consagración, using the same content as the standalone menu page. The rosary route is `#rosario-consagracion`; the menu route remains `#consagracion`.
+
+Each numbered progress circle is a keyboard-accessible button that jumps to that rosary page. Switching languages or using Back/Forward preserves the selected page.
