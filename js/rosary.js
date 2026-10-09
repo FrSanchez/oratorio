@@ -36,15 +36,22 @@
         description: mystery.description,
         sections: decade,
       })),
-      { title: ui.closingTitle, label: ui.closingLabel, sections: [{ paragraphs: p.closingPrayers }] },
+      { title: ui.closingTitle, label: ui.closingLabel, sections: [
+        { paragraphs: p.closingPrayers.slice(0, 1) },
+        { heading: ui.ourFatherTitle, paragraphs: [p.ourFather] },
+        { paragraphs: p.closingPrayers.slice(1) },
+        { paragraphs: [p.glory] },
+      ] },
       { title: ui.litanyTitle, label: ui.litanyLabel, sections: [
-        { paragraphs: p.litanyOpening },
-        { paragraphs: p.litanyInvocations.map(invocation => `${invocation}\n${ui.prayForUs}`) },
+        { paragraphs: p.litanyOpening, emphasizedResponses: [p.litanyMercyResponse] },
+        { paragraphs: p.litanyInvocations.map((invocation, index) => index === 0
+          ? `${invocation}\n${p.litanyResponse}` : invocation), emphasizedResponses: [p.litanyResponse] },
+        { paragraphs: p.litanyClosing },
       ] },
       { title: ui.finalTitle, label: ui.finalLabel, sections: [
-        { paragraphs: p.finalPrayers },
-        { heading: ui.offeringTitle, paragraphs: [p.offering] },
-        { heading: ui.conclusionTitle, paragraphs: p.conclusion },
+        { heading: ui.thanksgivingTitle, paragraphs: p.finalPrayers.slice(0, 1) },
+        { heading: ui.salveTitle, paragraphs: p.finalPrayers.slice(1, 4) },
+        { heading: ui.letUsPrayTitle, paragraphs: p.finalPrayers.slice(4) },
       ] },
     ];
   }
