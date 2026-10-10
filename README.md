@@ -65,7 +65,7 @@ The top-left menu opens Presentación, Recomendaciones Previas, Rosario, Consagr
 
 Edit Spanish and English supplementary content in `js/pages.js`. Menu labels live in `js/locales.js`; URL routing is defined in `js/navigation.js`. Links use hashes, so no server rewrite configuration is required. Direct links, refresh, and browser Back/Forward work on all pages. The farewell song has a direct link at `#cancionero/adios-reina-del-cielo`.
 
-The songbook uses two columns on wider screens. Recibir el Apostolado has separate Sí/No columns with checkmark/cross bullets. Both layouts stack on narrow screens. English song lyrics are translations of the supplied Spanish text.
+The songbook uses two columns on wider screens. Recibir el Apostolado has separate Sí/No columns with checkmark/cross bullets. Both layouts stack on narrow screens. The English songbook is intentionally empty until suitable English songs are selected. Spanish songs remain available.
 
 ## Rosary navigation
 
