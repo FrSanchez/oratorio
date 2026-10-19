@@ -45,7 +45,7 @@ test('Spanish and English include complete matching pages and working cross-link
       for (const section of page.sections) validateSection(section, pages, language);
     }
     assert.equal(pages.cancionero.sections.length, language === 'es' ? 7 : 0);
-    assert.deepEqual(pages.recomendaciones.sections.filter(s => s.items).flatMap(s => s.items.map((_, i) => s.start + i)), [1,2,3,4,5,6]);
+    assert.deepEqual(pages.recomendaciones.sections.filter(s => s.items).flatMap(s => s.items.map((_, i) => s.start + i)), [1,2,3,4,5,6,7]);
     assert.equal(pages['hacer-y-no-hacer'].sections[0].bullets.length, 6);
     assert.equal(pages['hacer-y-no-hacer'].sections[1].bullets.length, 5);
   }

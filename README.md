@@ -53,13 +53,13 @@ Language names are shown in their own languages (Español / English). The page's
 
 To add another language, supply a matching content file and UI dictionary in `locales.js`, add its option in the settings selector, and update the supported language validation in `app.js`.
 
-## Deploying updates
+## Deployment
 
-Upload the complete site folder, including `css/styles.css`, all files under `js/`, and the `vendor/` files. The custom stylesheet link includes a version query to avoid reusing older cached CSS. After changing the stylesheet, change this version in `index.html` before deploying. If your host has a CDN cache, purge it when deploying updated files.
+To prepare the site for hosting, use the deployment script. This creates a  folder containing only the production files (excluding tests, documentation, and Git history), which should then be uploaded to your web host.
 
-The header image also has explicit fallback dimensions, so it remains small if the custom stylesheet fails to load. Its final alignment and responsive size come from the `.header-layout` and `.header-image` rules in `css/styles.css`.
 
-## Navigation and supplementary pages
+
+ Navigation and supplementary pages
 
 The top-left menu opens Presentación, Recomendaciones Previas, Rosario, Consagración, Despedida, Cancionero, and Hacer y No Hacer. The latter page is titled Recibir el Apostolado. Every supplementary page includes a Rosario button at the bottom. Rosario remains the default landing page.
 
