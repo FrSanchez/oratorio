@@ -60,6 +60,13 @@
       section._isRightAligned = true;
     }
 
+    if (section.image) {
+      const image = document.createElement('img');
+      image.src = section.image;
+      container.append(image);
+      image.classList.add('image-section');
+    }
+
     for (const text of section.paragraphs || []) container.append(makeParagraph(text, section, ui));
     if (section.bullets) {
       const list = document.createElement('ul');

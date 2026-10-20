@@ -10,21 +10,27 @@
 
       gtag('config', 'G-S3S0R73JH1');
     </script>
+    <title>{{TITLE}}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0c2340">
     <meta name="description" content="{{DESCRIPTION}}">
-    <title>{{TITLE}}</title>
+        <!-- OpenGraph / Social Meta -->
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:description" content="{{DESCRIPTION}}">
+    <meta property="og:image" content="https://sanchezparralabs.com/oratorio/assets/seal.png">
+    <meta property="og:url" content="https://sanchezparralabs.com/oratorio">
+    <meta property="og:type" content="website" />
     <link rel="stylesheet" href="{{ASSET_PATH}}vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ASSET_PATH}}css/styles.css?v=a12761543219a">
+    <link rel="stylesheet" href="{{ASSET_PATH}}css/styles.css?v={{TIMESTAMP}}">
     <link rel="icon" type="image/png" href="{{ASSET_PATH}}favicon.png">
-    <script src="{{ASSET_PATH}}js/content.js?v=a12761543219a" defer></script>
-    <script src="{{ASSET_PATH}}js/content-en.js?v=a12761543219a" defer></script>
-    <script src="{{ASSET_PATH}}js/locales.js?v=a12761543219a" defer></script>
-    <script src="{{ASSET_PATH}}js/pages.js?v=a12761543219a" defer></script>
-    <script src="{{ASSET_PATH}}js/rosary.js?v=a12761543219a" defer></script>
-    <script src="{{ASSET_PATH}}js/navigation.js?v=a12761543219a" defer></script>
-    <script src="{{ASSET_PATH}}js/app.js?v=a12761543219a" defer></script>
+    <script src="{{ASSET_PATH}}js/content.js?v={{TIMESTAMP}}" defer></script>
+    <script src="{{ASSET_PATH}}js/content-en.js?v={{TIMESTAMP}}" defer></script>
+    <script src="{{ASSET_PATH}}js/locales.js?v={{TIMESTAMP}}" defer></script>
+    <script src="{{ASSET_PATH}}js/pages.js?v={{TIMESTAMP}}" defer></script>
+    <script src="{{ASSET_PATH}}js/rosary.js?v={{TIMESTAMP}}" defer></script>
+    <script src="{{ASSET_PATH}}js/navigation.js?v={{TIMESTAMP}}" defer></script>
+    <script src="{{ASSET_PATH}}js/app.js?v={{TIMESTAMP}}" defer></script>
   </head>
   <body>
     <a class="visually-hidden-focusable skip-link" href="#page-title" data-i18n="skipLink">Ir a las oraciones</a>

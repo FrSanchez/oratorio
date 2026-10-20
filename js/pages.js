@@ -8,6 +8,7 @@
       "label": "✦ ✦ ✦",
       "sections": [
         {
+          "image": "images/seal.png",
           "paragraphs": [
             "Un llamado urgente del Cielo. En la cuarta aparición a los pastorcitos, la Santísima Virgen María, Nuestra Señora de Fátima, les transmitió un mensaje de una trascendencia absoluta: «recen, recen mucho y hagan sacrificios por los pecadores, porque muchas almas van al infierno por no tener quién se sacrifique y rece por ellas». Esta verdad ineludible sobre la salvación de las almas es el motor fundamental que impulsa una poderosa misión de fe que hoy asumimos con vigor.",
             "Hoy, esa misma urgencia divina de la Madre impulsa con renovada energía el Apostolado del Oratorio de Nuestra Señora de Fátima. Este apostolado emprende una nueva y prometedora etapa de intensa labor evangelizadora. Nos anclamos sólidamente en la Parroquia Nuestra Señora de la Esperanza, en Everett, Washington, con la firme esperanza de que esta iniciativa dé muchos frutos. Este es un nuevo y glorioso amanecer para la propagación del rezo del Santo Rosario en familia.",

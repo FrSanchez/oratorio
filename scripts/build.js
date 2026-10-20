@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const timestamp = Date.now();
 const configs = {
     es: {
         title: "Apostolado del Oratorio de Nuestra Señora de Fátima",
@@ -58,6 +59,7 @@ function build() {
             .replace(/{{LANG}}/g, config.lang)
             .replace(/{{TITLE}}/g, config.title)
             .replace(/{{DESCRIPTION}}/g, config.description)
+            .replace(/{{TIMESTAMP}}/g, timestamp)
             .replace(/{{ASSET_PATH}}/g, config.assetPath);
 
         const outputDir = path.dirname(config.outputPath);
