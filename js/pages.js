@@ -303,6 +303,7 @@
       "label": "✦ ✦ ✦",
       "sections": [
         {
+          "image": "images/seal.png",
           "paragraphs": [
             "An urgent call from Heaven. In the fourth apparition to the shepherd children, the Blessed Virgin Mary, Our Lady of Fátima, conveyed a message of absolute importance: “Pray, pray much and make sacrifices for sinners, because many souls go to hell because they have no one to sacrifice and pray for them.” This undeniable truth about the salvation of souls is the fundamental force driving a powerful mission of faith that we now undertake with vigor.",
             "Today, that same divine urgency of our Mother inspires the Oratory Apostolate of Our Lady of Fátima with renewed energy. This apostolate begins a new and promising stage of intense evangelization. We are firmly rooted in Our Lady of Hope Parish in Everett, Washington, with the strong hope that this initiative will bear much fruit. This is a new and glorious dawn for spreading the practice of praying the Holy Rosary as a family.",

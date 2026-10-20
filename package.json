@@ -1,0 +1,13 @@
+{
+  "name": "oratorio",
+  "version": "1.0.0",
+  "description": "Oratorio de la Virgen de Fátima",
+  "main": "js/app.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
