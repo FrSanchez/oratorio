@@ -21,7 +21,7 @@ const expectedReadingUrls = {
 };
 
 function validateSection(section, pages, language) {
-  for (const text of section.paragraphs || []) assert.ok(typeof text === 'string' && text.length > 0);
+  for (const text of section.paragraphs || []) assert.ok((typeof text === 'string' && text.length > 0) || (typeof text == 'object' && text.prayer));
   for (const text of section.bullets || []) assert.ok(typeof text === 'string' && text.length > 0);
   for (const item of section.items || []) validateSection(item, pages, language);
   for (const link of section.links || []) {
