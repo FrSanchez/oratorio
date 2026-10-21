@@ -21,6 +21,20 @@
     <meta property="og:image" content="https://sanchezparralabs.com/oratorio/assets/seal.png">
     <meta property="og:url" content="https://sanchezparralabs.com/oratorio">
     <meta property="og:type" content="website" />
+    <meta name="author" content="Sánchez-Parra Labs <https://sanchezparralabs.com>">
+    <meta name="keywords" content="rosario, rosary, oratorio, oratory, fatima, virgen de fatima, our lady of fatima, catholic prayers, catholic devotions, catholic rosary, catholic rosary prayers">
+
+     <!-- Search Engine Robots -->
+    <meta name="robots" content="index, follow">
+
+    <!-- X / Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{TITLE}}">
+    <meta name="twitter:description" content="{{DESCRIPTION}}">
+    <meta name="twitter:image" content="https://sanchezparralabs.com/oratorio/assets/seal.png">
+
+
+    <link rel="canonical" href="https://sanchezparralabs.com/oratorio">
     <link rel="stylesheet" href="{{ASSET_PATH}}vendor/bootstrap.min.css">
     <link rel="stylesheet" href="{{ASSET_PATH}}css/styles.css?v={{TIMESTAMP}}">
     <link rel="icon" type="image/png" href="{{ASSET_PATH}}favicon.png">
@@ -31,6 +45,22 @@
     <script src="{{ASSET_PATH}}js/rosary.js?v={{TIMESTAMP}}" defer></script>
     <script src="{{ASSET_PATH}}js/navigation.js?v={{TIMESTAMP}}" defer></script>
     <script src="{{ASSET_PATH}}js/app.js?v={{TIMESTAMP}}" defer></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "{{TITLE}}",
+      "operatingSystem": "Web, Android, iOS",
+      "applicationCategory": "LifestyleApplication",
+      "description": "{{DESCRIPTION}}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
   </head>
   <body>
     <a class="visually-hidden-focusable skip-link" href="#page-title" data-i18n="skipLink">Ir a las oraciones</a>
