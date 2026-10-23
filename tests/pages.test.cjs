@@ -1,8 +1,33 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { getPages } = require('../js/pages.js');
-const { infoRoutes, menuRoutes, routeForHash } = require('../js/navigation.js');
+const { infoRoutes, menuRoutes, routeForHash, languageForPath, pathForLanguage } = require('../js/navigation.js');
 const { routes } = require('../js/rosary.js');
+
+test('URL paths select Spanish by default and English only for an en path segment', () => {
+  for (const pathname of ['/', '/index.html', '/oratorio/', '/oratorio/index.html', '/english/', '/en-US/']) {
+    assert.equal(languageForPath(pathname), 'es', pathname);
+  }
+  for (const pathname of ['/en/', '/en/index.html', '/oratorio/en/', '/oratorio/en/index.html', '/oratorio/en']) {
+    assert.equal(languageForPath(pathname), 'en', pathname);
+  }
+});
+
+test('Language links preserve the deployment directory and explicit index filename', () => {
+  for (const [spanish, english] of [
+    ['/', '/en/'],
+    ['/index.html', '/en/index.html'],
+    ['/oratorio/', '/oratorio/en/'],
+    ['/oratorio/index.html', '/oratorio/en/index.html'],
+  ]) {
+    assert.equal(pathForLanguage(spanish, 'en'), english);
+    assert.equal(pathForLanguage(english, 'es'), spanish);
+    assert.equal(pathForLanguage(spanish, 'es'), spanish);
+    assert.equal(pathForLanguage(english, 'en'), english);
+  }
+  assert.equal(pathForLanguage('/oratorio', 'en'), '/oratorio/en/');
+  assert.equal(pathForLanguage('/oratorio/en', 'es'), '/oratorio/');
+});
 
 test('All menu pages and rosary steps support direct links', () => {
   assert.equal(menuRoutes.length, 8);

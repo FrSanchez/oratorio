@@ -43,7 +43,7 @@ Bootstrap CSS is bundled in `vendor/bootstrap.min.css` so the page does not need
 
 ## Language settings
 
-The gear button in the top-right corner opens Settings. Spanish is the default. Switching to English updates the current page immediately and preserves rosary progress. The choice is saved in localStorage under `oratorio-language`; when storage is unavailable, switching still works for the current visit. No account or backend is needed.
+The URL determines the language: Spanish is the default, and an `/en/` path segment selects English. The menu includes an English / Español link immediately before About / Acerca de. This link navigates to the corresponding language URL, preserving the current page hash and query string. No account or backend is needed.
 
 - `js/locales.js`: interface strings, page labels, prayer headings, accessibility labels, and formatting templates.
 - `js/content.js`: Spanish prayers and mysteries.
@@ -51,7 +51,7 @@ The gear button in the top-right corner opens Settings. Spanish is the default. 
 
 Language names are shown in their own languages (Español / English). The page's HTML language and tab title follow the selection. URL hashes stay stable across languages so browser navigation continues to work. English content uses familiar English prayer wording where applicable and translations of the supplied Spanish texts elsewhere; the source abbreviations in the closing prayers are retained.
 
-To add another language, supply a matching content file and UI dictionary in `locales.js`, add its option in the settings selector, and update the supported language validation in `app.js`.
+To add another language, supply a matching content file and UI dictionary in `locales.js`, update the language menu link in `app.js`, and extend the language path helpers in `navigation.js`.
 
 ## Deployment
 
