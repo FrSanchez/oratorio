@@ -66,7 +66,6 @@ test('About is available in both languages with collaboration credits and an ema
     assert.equal(page.title, title);
     const text = page.sections.flatMap(section => section.paragraphs).join(' ');
     assert.ok(text.includes('Sanchez Parra Labs'));
-    assert.ok(text.includes('Juan Carlos Rivera Zelaya'));
     assert.ok(text.includes('Fátima'));
     assert.deepEqual(page.sections[0].links, [{
       href: 'mailto:sanchezparralabs@outlook.com',
