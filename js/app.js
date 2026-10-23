@@ -23,7 +23,7 @@
   ].map(id => [id, document.getElementById(id)]));
   let groupKey = groupForDate();
   let current = routeForHash(window.location.hash, routes);
-  const menuLabelKeys = ['menuPresentation', 'menuRecommendations', 'menuRosary', 'menuConsecration', 'menuFarewell', 'menuSongbook', 'menuDosDonts'];
+  const menuLabelKeys = ['menuPresentation', 'menuRecommendations', 'menuRosary', 'menuConsecration', 'menuFarewell', 'menuSongbook', 'menuDosDonts', 'menuAbout'];
   const menuIcons = [
     'images/presentation.svg',
     'images/recommendations.svg',
@@ -32,6 +32,7 @@
     'images/farewell.svg',
     'images/songbook.svg',
     'images/dosdonts.svg',
+    'images/about.svg',
   ];
 
   function makeParagraph(text, section, ui) {

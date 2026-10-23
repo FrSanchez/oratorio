@@ -8,6 +8,7 @@ const configs = {
         description: "Reza el Santo Rosario con las oraciones en español y los misterios de cada día.",
         lang: "es",
         outputPath: "dist/index.html",
+        shortTitle: "Oratorio",
         assetPath: "" 
     },
     en: {
@@ -15,6 +16,7 @@ const configs = {
         description: "Pray the Holy Rosary with prayers in English and the mysteries of each day.",
         lang: "en",
         outputPath: "dist/en/index.html",
+        shortTitle: "Oratory",
         assetPath: "../" 
     }
 };
@@ -60,6 +62,7 @@ function build() {
             .replace(/{{TITLE}}/g, config.title)
             .replace(/{{DESCRIPTION}}/g, config.description)
             .replace(/{{TIMESTAMP}}/g, timestamp)
+            .replace(/{{SHORT_TITLE}}/g, config.shortTitle || config.title)
             .replace(/{{ASSET_PATH}}/g, config.assetPath);
 
         const outputDir = path.dirname(config.outputPath);

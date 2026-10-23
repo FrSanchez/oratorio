@@ -5,7 +5,7 @@ const { infoRoutes, menuRoutes, routeForHash } = require('../js/navigation.js');
 const { routes } = require('../js/rosary.js');
 
 test('All menu pages and rosary steps support direct links', () => {
-  assert.equal(menuRoutes.length, 7);
+  assert.equal(menuRoutes.length, 8);
   for (const route of infoRoutes) assert.equal(routeForHash(`#${route}`, routes).view, route);
   for (let i = 0; i < routes.length; i++) {
     assert.deepEqual(routeForHash(`#${routes[i]}`, routes), {view:'rosario',anchor:'',index:i});
@@ -26,6 +26,11 @@ function validateSection(section, pages, language) {
   for (const item of section.items || []) validateSection(item, pages, language);
   for (const link of section.links || []) {
     assert.ok(link.label.length > 0);
+    if (link.href.startsWith('mailto:')) {
+      assert.equal(link.href, 'mailto:sanchezparralabs@outlook.com');
+      assert.equal(link.label, 'sanchezparralabs@outlook.com');
+      continue;
+    }
     if (!link.href.startsWith('#')) { assert.equal(link.href, expectedReadingUrls[language], `Daily readings URL for ${language}`); continue; }
     const destination = routeForHash(link.href, routes);
     if (destination.view !== 'rosario') assert.ok(pages[destination.view]);
@@ -51,6 +56,23 @@ test('Spanish and English include complete matching pages and working cross-link
   }
   for (const key of infoRoutes.filter(key => key !== 'cancionero')) assert.equal(spanish[key].sections.length, english[key].sections.length);
   assert.deepEqual(english.cancionero.sections, []);
+});
+
+test('About is available in both languages with collaboration credits and an email link', () => {
+  assert.ok(menuRoutes.includes('acerca-de'));
+  assert.deepEqual(routeForHash('#acerca-de', routes), {view:'acerca-de',anchor:'',index:0});
+  for (const [language, title] of [['es', 'Acerca de'], ['en', 'About']]) {
+    const page = getPages(language)['acerca-de'];
+    assert.equal(page.title, title);
+    const text = page.sections.flatMap(section => section.paragraphs).join(' ');
+    assert.ok(text.includes('Sanchez Parra Labs'));
+    assert.ok(text.includes('Juan Carlos Rivera Zelaya'));
+    assert.ok(text.includes('Fátima'));
+    assert.deepEqual(page.sections[0].links, [{
+      href: 'mailto:sanchezparralabs@outlook.com',
+      label: 'sanchezparralabs@outlook.com',
+    }]);
+  }
 });
 
 
