@@ -1,11 +1,36 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { getPages } = require('../js/pages.js');
-const { infoRoutes, menuRoutes, routeForHash } = require('../js/navigation.js');
+const { infoRoutes, menuRoutes, routeForHash, languageForPath, pathForLanguage } = require('../js/navigation.js');
 const { routes } = require('../js/rosary.js');
 
+test('URL paths select Spanish by default and English only for an en path segment', () => {
+  for (const pathname of ['/', '/index.html', '/oratorio/', '/oratorio/index.html', '/english/', '/en-US/']) {
+    assert.equal(languageForPath(pathname), 'es', pathname);
+  }
+  for (const pathname of ['/en/', '/en/index.html', '/oratorio/en/', '/oratorio/en/index.html', '/oratorio/en']) {
+    assert.equal(languageForPath(pathname), 'en', pathname);
+  }
+});
+
+test('Language links preserve the deployment directory and explicit index filename', () => {
+  for (const [spanish, english] of [
+    ['/', '/en/'],
+    ['/index.html', '/en/index.html'],
+    ['/oratorio/', '/oratorio/en/'],
+    ['/oratorio/index.html', '/oratorio/en/index.html'],
+  ]) {
+    assert.equal(pathForLanguage(spanish, 'en'), english);
+    assert.equal(pathForLanguage(english, 'es'), spanish);
+    assert.equal(pathForLanguage(spanish, 'es'), spanish);
+    assert.equal(pathForLanguage(english, 'en'), english);
+  }
+  assert.equal(pathForLanguage('/oratorio', 'en'), '/oratorio/en/');
+  assert.equal(pathForLanguage('/oratorio/en', 'es'), '/oratorio/');
+});
+
 test('All menu pages and rosary steps support direct links', () => {
-  assert.equal(menuRoutes.length, 7);
+  assert.equal(menuRoutes.length, 8);
   for (const route of infoRoutes) assert.equal(routeForHash(`#${route}`, routes).view, route);
   for (let i = 0; i < routes.length; i++) {
     assert.deepEqual(routeForHash(`#${routes[i]}`, routes), {view:'rosario',anchor:'',index:i});
@@ -21,11 +46,16 @@ const expectedReadingUrls = {
 };
 
 function validateSection(section, pages, language) {
-  for (const text of section.paragraphs || []) assert.ok(typeof text === 'string' && text.length > 0);
+  for (const text of section.paragraphs || []) assert.ok((typeof text === 'string' && text.length > 0) || (typeof text == 'object' && text.prayer));
   for (const text of section.bullets || []) assert.ok(typeof text === 'string' && text.length > 0);
   for (const item of section.items || []) validateSection(item, pages, language);
   for (const link of section.links || []) {
     assert.ok(link.label.length > 0);
+    if (link.href.startsWith('mailto:')) {
+      assert.equal(link.href, 'mailto:sanchezparralabs@outlook.com');
+      assert.equal(link.label, 'sanchezparralabs@outlook.com');
+      continue;
+    }
     if (!link.href.startsWith('#')) { assert.equal(link.href, expectedReadingUrls[language], `Daily readings URL for ${language}`); continue; }
     const destination = routeForHash(link.href, routes);
     if (destination.view !== 'rosario') assert.ok(pages[destination.view]);
@@ -45,12 +75,28 @@ test('Spanish and English include complete matching pages and working cross-link
       for (const section of page.sections) validateSection(section, pages, language);
     }
     assert.equal(pages.cancionero.sections.length, language === 'es' ? 7 : 0);
-    assert.deepEqual(pages.recomendaciones.sections.filter(s => s.items).flatMap(s => s.items.map((_, i) => s.start + i)), [1,2,3,4,5,6]);
+    assert.deepEqual(pages.recomendaciones.sections.filter(s => s.items).flatMap(s => s.items.map((_, i) => s.start + i)), [1,2,3,4,5,6,7]);
     assert.equal(pages['hacer-y-no-hacer'].sections[0].bullets.length, 6);
     assert.equal(pages['hacer-y-no-hacer'].sections[1].bullets.length, 5);
   }
   for (const key of infoRoutes.filter(key => key !== 'cancionero')) assert.equal(spanish[key].sections.length, english[key].sections.length);
   assert.deepEqual(english.cancionero.sections, []);
+});
+
+test('About is available in both languages with collaboration credits and an email link', () => {
+  assert.ok(menuRoutes.includes('acerca-de'));
+  assert.deepEqual(routeForHash('#acerca-de', routes), {view:'acerca-de',anchor:'',index:0});
+  for (const [language, title] of [['es', 'Acerca de'], ['en', 'About']]) {
+    const page = getPages(language)['acerca-de'];
+    assert.equal(page.title, title);
+    const text = page.sections.flatMap(section => section.paragraphs).join(' ');
+    assert.ok(text.includes('Sanchez Parra Labs'));
+    assert.ok(text.includes('Fátima'));
+    assert.deepEqual(page.sections[0].links, [{
+      href: 'mailto:sanchezparralabs@outlook.com',
+      label: 'sanchezparralabs@outlook.com',
+    }]);
+  }
 });
 
 

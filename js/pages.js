@@ -3,11 +3,30 @@
 (function (root) {
   const pages = {
   "es": {
+    "acerca-de": {
+      "title": "Acerca de",
+      "label": "✦ ✦ ✦",
+      "sections": [
+        {
+          "paragraphs": [
+            "Esta aplicación es una colaboración entre Sanchez Parra Labs y la parroquia de Nuestra Señora de la Esperanza con el propósito de promover el Apostolado del Oratorio de Nuestra Señora de Fátima.",
+            "Para preguntas o problemas relacionados con el uso de la aplicación, por favor contacte a:"
+          ],
+          "links": [
+            {
+              "href": "mailto:sanchezparralabs@outlook.com",
+              "label": "sanchezparralabs@outlook.com"
+            }
+          ]
+        }
+      ]
+    },
     "presentacion": {
       "title": "Presentación",
       "label": "✦ ✦ ✦",
       "sections": [
         {
+          "image": "images/seal.png",
           "paragraphs": [
             "Un llamado urgente del Cielo. En la cuarta aparición a los pastorcitos, la Santísima Virgen María, Nuestra Señora de Fátima, les transmitió un mensaje de una trascendencia absoluta: «recen, recen mucho y hagan sacrificios por los pecadores, porque muchas almas van al infierno por no tener quién se sacrifique y rece por ellas». Esta verdad ineludible sobre la salvación de las almas es el motor fundamental que impulsa una poderosa misión de fe que hoy asumimos con vigor.",
             "Hoy, esa misma urgencia divina de la Madre impulsa con renovada energía el Apostolado del Oratorio de Nuestra Señora de Fátima. Este apostolado emprende una nueva y prometedora etapa de intensa labor evangelizadora. Nos anclamos sólidamente en la Parroquia Nuestra Señora de la Esperanza, en Everett, Washington, con la firme esperanza de que esta iniciativa dé muchos frutos. Este es un nuevo y glorioso amanecer para la propagación del rezo del Santo Rosario en familia.",
@@ -23,7 +42,7 @@
       ]
     },
     "recomendaciones": {
-      "title": "Recomendaciones Previas",
+      "title": "Recibiendo el Oratorio",
       "label": "✦ ✦ ✦",
       "sections": [
         {
@@ -54,13 +73,22 @@
             },
             {
               "paragraphs": [
-                "En seguida lo colocará en un lugar de honor y saludará a la Santísima Virgen rezando tres avemarías, finalizando con las jaculatorias:"
+                "En seguida lo colocará en un lugar de honor y saludará a la Santísima Virgen rezando tres avemarías:",
+                "Dios te salve, María, llena eres de gracia; el Señor es contigo. Bendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén."
+              ],
+              "markers": true,
+              "numMarkers": 3,
+            },
+            {
+              paragraphs: [
+                "Jaculatorias:"
               ],
               "bullets": [
                 "Oh María sin pecado concebida, ruega por nosotros que recurrimos a ti.",
                 "Nuestra Señora de Fátima, ruega por nosotros.",
                 "Corazón Inmaculado de María, sé la salvación del alma mía."
               ]
+
             }
           ],
           "start": 3
@@ -105,7 +133,7 @@
               ]
             }
           ],
-          "start": 5
+          "start": 6
         },
         {
           "paragraphs": [],
@@ -127,7 +155,7 @@
               ]
             }
           ],
-          "start": 6
+          "start": 7
         }
       ]
     },
@@ -175,7 +203,9 @@
         {
           "paragraphs": [
             "Cuando el Oratorio vaya a partir hacia otra casa, se reza:",
-            "Padre nuestro…, Ave María…, Gloria…"
+            { prayer: "ourFather" },
+            { prayer: "hailMary" },
+            { prayer: "glory" }
           ]
         },
         {
@@ -264,10 +294,10 @@
           "heading": "Sí",
           "bullets": [
             "Prepara el altar e incluye una vela.",
-            "Ponte de acuerdo para recibir la Virgen en tu casa y entregarla en la otra casa. Sé flexible y comprensivo.",
+            "Ponte de acuerdo para recibir a la Virgen en tu casa y entregarla en la otra casa. Sé flexible y comprensivo.",
             "El jefe de hogar debe recibir la imagen.",
             "Reza el Rosario en familia una vez que la imagen haya sido recibida en tu casa.",
-            "Puedes recibir también a los otros miembros del Oratorio. Normalmente quien entrega la Virgen se queda a rezar.",
+            "Puedes recibir también a los otros miembros del Oratorio. Normalmente quien entrega a la Virgen se queda a rezar.",
             "Si tu casa o apartamento es pequeño y no puedes recibirlos, dilo con respeto."
           ],
           "checklist": "positive"
@@ -289,11 +319,30 @@
     }
   },
   "en": {
+    "acerca-de": {
+      "title": "About",
+      "label": "✦ ✦ ✦",
+      "sections": [
+        {
+          "paragraphs": [
+            "This application is a collaboration between Sanchez Parra Labs and Our Lady of Hope Parish for the purpose of promoting the Apostolate of the Oratory of Our Lady of Fátima.",
+            "For questions or problems regarding the use of the application, please contact:"
+          ],
+          "links": [
+            {
+              "href": "mailto:sanchezparralabs@outlook.com",
+              "label": "sanchezparralabs@outlook.com"
+            }
+          ]
+        }
+      ]
+    },
     "presentacion": {
       "title": "Introduction",
       "label": "✦ ✦ ✦",
       "sections": [
         {
+          "image": "images/seal.png",
           "paragraphs": [
             "An urgent call from Heaven. In the fourth apparition to the shepherd children, the Blessed Virgin Mary, Our Lady of Fátima, conveyed a message of absolute importance: “Pray, pray much and make sacrifices for sinners, because many souls go to hell because they have no one to sacrifice and pray for them.” This undeniable truth about the salvation of souls is the fundamental force driving a powerful mission of faith that we now undertake with vigor.",
             "Today, that same divine urgency of our Mother inspires the Oratory Apostolate of Our Lady of Fátima with renewed energy. This apostolate begins a new and promising stage of intense evangelization. We are firmly rooted in Our Lady of Hope Parish in Everett, Washington, with the strong hope that this initiative will bear much fruit. This is a new and glorious dawn for spreading the practice of praying the Holy Rosary as a family.",
@@ -340,7 +389,15 @@
             },
             {
               "paragraphs": [
-                "Then place it in a position of honor and greet the Blessed Virgin by praying three Hail Marys, concluding with these invocations:"
+                "Then place it in a position of honor and greet the Blessed Virgin by praying three Hail Marys:",
+                "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+              ],
+              "markers": true,
+              "numMarkers": 3,
+            },
+            {
+              "paragraphs": [
+                "Invocations:"
               ],
               "bullets": [
                 "O Mary, conceived without sin, pray for us who have recourse to you.",
@@ -391,7 +448,7 @@
               ]
             }
           ],
-          "start": 5
+          "start": 6
         },
         {
           "paragraphs": [],
@@ -413,7 +470,7 @@
               ]
             }
           ],
-          "start": 6
+          "start": 7
         }
       ]
     },
@@ -461,7 +518,9 @@
         {
           "paragraphs": [
             "When the Oratory is about to leave for another home, pray:",
-            "Our Father…, Hail Mary…, Glory Be…"
+            { prayer: "ourFather" },
+            { prayer: "hailMary" },
+            { prayer: "glory" }
           ]
         },
         {

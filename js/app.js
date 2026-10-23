@@ -2,32 +2,49 @@
   const { groupForDate, pagesForGroup, routes } = window.Rosary;
   const { getLocale, format } = window.RosaryLocales;
   const { getPages } = window.OratorioPages;
-  const { routeForHash, menuRoutes } = window.OratorioNavigation;
-  const storageKey = 'oratorio-language';
-  let language = 'es';
-  try {
-    const saved = window.localStorage.getItem(storageKey);
-    if (saved === 'es' || saved === 'en') language = saved;
-  } catch { /* Language switching works when storage is unavailable. */ }
-  const settingsDialog = document.getElementById('settings-dialog');
-  const languageSelect = document.getElementById('language-select');
-  const settingsButton = document.getElementById('settings-button');
+  const { routeForHash, menuRoutes, languageForPath, pathForLanguage } = window.OratorioNavigation;
+  const language = languageForPath(window.location.pathname);
+  function languageHref(selected) {
+    return `${pathForLanguage(window.location.pathname, selected)}${window.location.search}${window.location.hash}`;
+  }
+  iconPrefix = language !== 'es' ? '../' : '';
   const menuDialog = document.getElementById('menu-dialog');
   const menuButton = document.getElementById('menu-button');
   const menuLinks = document.getElementById('menu-links');
   let menuNavigated = false;
   const elements = Object.fromEntries([
-    'daily-group', 'page-count', 'progress', 'progress-fill', 
+    'daily-group', 'progress', 'progress-fill', 
     'section-label', 'page-title', 'mystery-title', 'mystery-description',
-    'prayers', 'next-button', 'home-button', 'closing-symbol', 'progress-panel',
+    'prayers', 'next-button', 'top-next-button', 'home-button', 'closing-symbol', 'progress-panel',
   ].map(id => [id, document.getElementById(id)]));
   let groupKey = groupForDate();
   let current = routeForHash(window.location.hash, routes);
-  const menuLabelKeys = ['menuPresentation', 'menuRecommendations', 'menuRosary', 'menuConsecration', 'menuFarewell', 'menuSongbook', 'menuDosDonts'];
+  const menuLabelKeys = ['menuPresentation', 'menuRecommendations', 'menuRosary', 'menuConsecration', 'menuFarewell', 'menuSongbook', 'menuDosDonts', 'menuAbout'];
+  const menuIcons = [
+    iconPrefix + 'images/presentation.svg',
+    iconPrefix + 'images/recommendations.svg',
+    iconPrefix + 'images/rosary-svgrepo-com.svg',
+    iconPrefix + 'images/consecration.svg',
+    iconPrefix + 'images/farewell.svg',
+    iconPrefix + 'images/songbook.svg',
+    iconPrefix + 'images/dosdonts.svg',
+    iconPrefix + 'images/about.svg',
+  ];
 
   function makeParagraph(text, section, ui) {
     const paragraph = document.createElement('p');
     paragraph.className = 'prayer-paragraph';
+    
+    // Right-align paragraphs if they belong to the second section of the "presentacion" page
+    // We pass section index from appendContent to identify the section
+    if (section._isRightAligned) {
+      paragraph.style.textAlign = 'right';
+    }
+
+    if (typeof text == 'object' && text.prayer) {
+      text = section.prayers[text.prayer] || text.prayer;
+    }
+
     text.split('\n').forEach((line, index) => {
       if (index > 0) paragraph.append(document.createTextNode('\n'));
       if (section.emphasizedResponses?.includes(line)) {
@@ -47,7 +64,19 @@
     return paragraph;
   }
 
-  function appendContent(container, section, ui) {
+  function appendContent(container, section, ui, sectionIndex = 0) {
+    // Identify if this is the second section of the presentation page
+    if (current.view === 'presentacion' && sectionIndex === 1) {
+      section._isRightAligned = true;
+    }
+
+    if (section.image) {
+      const image = document.createElement('img');
+      image.src = section.image;
+      container.append(image);
+      image.classList.add('image-section');
+    }
+
     for (const text of section.paragraphs || []) container.append(makeParagraph(text, section, ui));
     if (section.bullets) {
       const list = document.createElement('ul');
@@ -66,7 +95,7 @@
       list.setAttribute('aria-label', ui.stagesLabel);
       list.setAttribute('data-i18n-aria', 'stagesLabel');
       const markers = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < section.numMarkers; i++) {
         const item = document.createElement('li');
         const marker = document.createElement('button');
         marker.type = 'button';
@@ -120,39 +149,48 @@
     for (const element of document.querySelectorAll('[data-i18n]')) element.textContent = ui[element.dataset.i18n];
     for (const element of document.querySelectorAll('[data-i18n-aria]')) element.setAttribute('aria-label', ui[element.dataset.i18nAria]);
     for (const element of document.querySelectorAll('[data-i18n-alt]')) element.alt = ui[element.dataset.i18nAlt];
-    languageSelect.value = language;
     menuLinks.replaceChildren(...menuRoutes.map((route, index) => {
       const item = document.createElement('li');
       const link = document.createElement('a');
+      const icon = document.createElement('img');
+      icon.src = menuIcons[index] || '';
+      icon.alt ='';
+      icon.className = 'menu-icon';
+      
+      const label = document.createElement('span');
+      label.textContent = ui[menuLabelKeys[index]];
       link.href = `#${route}`;
-      link.textContent = ui[menuLabelKeys[index]];
+      link.append(icon, label);
       if (route === current.view) link.setAttribute('aria-current', 'page');
       item.append(link);
       return item;
     }));
+    const languageItem = document.createElement('li');
+    const languageLink = document.createElement('a');
+    const otherLanguage = language === 'es' ? 'en' : 'es';
+    languageLink.href = languageHref(otherLanguage);
+    languageLink.hreflang = otherLanguage;
+    languageLink.lang = otherLanguage;
+    const languageIcon = document.createElement('img');
+    languageIcon.src = iconPrefix + 'images/language.svg';
+    languageIcon.alt = '';
+    languageIcon.className = 'menu-icon';
+    const languageLabel = document.createElement('span');
+    languageLabel.textContent = language === 'es' ? ui.english : ui.spanish;
+    languageLink.append(languageIcon, languageLabel);
+    languageItem.append(languageLink);
+    menuLinks.insertBefore(languageItem, menuLinks.lastElementChild);
     const pages = pagesForGroup(groupKey, language);
     const page = isRosary ? pages[current.index] : getPages(language)[current.view];
+    console.log(page);
     elements['progress-panel'].hidden = !isRosary;
     elements['daily-group'].textContent = content.groups[groupKey].name;
     const pageCount = format(ui.pageCount, { current: current.index + 1, total: pages.length });
-    // elements['page-count'].textContent = pageCount;
     elements.progress.setAttribute('aria-valuemax', pages.length);
     elements.progress.setAttribute('aria-valuenow', current.index + 1);
     elements.progress.setAttribute('aria-valuetext', `${pageCount}: ${page.title}`);
     elements['progress-fill'].style.width = `${(current.index + 1) / pages.length * 100}%`;
-    // elements['step-markers'].replaceChildren(...pages.map((step, index) => {
-    //   const item = document.createElement('li');
-    //   const marker = document.createElement('button');
-    //   marker.type = 'button';
-    //   marker.className = `step-marker${index < current.index ? ' completed' : ''}`;
-    //   marker.textContent = index + 1;
-    //   marker.dataset.pageIndex = index;
-    //   marker.setAttribute('aria-label', format(ui.jumpToPage, { current: index + 1, title: step.title }));
-    //   marker.setAttribute('aria-controls', 'prayer-page');
-    //   if (index === current.index) marker.setAttribute('aria-current', 'step');
-    //   item.append(marker);
-    //   return item;
-    // }));
+
     elements['section-label'].textContent = isRosary ? null : page.label;
     elements['page-title'].textContent = page.title;
     for (const [id, value] of [['mystery-title', page.mystery], ['mystery-description', page.description]]) {
@@ -162,7 +200,7 @@
     elements.prayers.classList.toggle('litany-columns', isRosary && routes[current.index] === 'letanias');
     elements.prayers.classList.toggle('songbook-columns', !!page.songbook);
     elements.prayers.classList.toggle('checklist-columns', !!page.checklists);
-    elements.prayers.replaceChildren(...page.sections.map(section => {
+    elements.prayers.replaceChildren(...page.sections.map((section, index) => {
       const container = document.createElement('section');
       console.log('section', section);
       container.className = `prayer-section${page.songbook ? ' song-card' : ''}${section.checklist ? ` checklist-${section.checklist}` : ''}`;
@@ -173,11 +211,13 @@
         if (section.id) heading.tabIndex = -1;
         container.append(heading);
       }
-      appendContent(container, section, ui);
+      section.prayers = content.prayers;
+      appendContent(container, section, ui, index);
       return container;
     }));
     elements['closing-symbol'].hidden = !isRosary || routes[current.index] !== 'cierre';
     elements['next-button'].hidden = !isRosary || current.index === pages.length - 1;
+    elements['top-next-button'].hidden = elements['next-button'].hidden;
     elements['home-button'].textContent = isRosary ? ui.home : ui.menuRosary;
     elements['home-button'].closest('footer').hidden = isRosary && current.index === 0;
     document.body.classList.toggle('at-start', isRosary && current.index === 0);
@@ -219,31 +259,17 @@
   menuDialog.addEventListener('click', event => dismissOnBackdrop(menuDialog, event));
   menuLinks.addEventListener('click', event => {
     const link = event.target.closest('a');
-    if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    if (!link || !link.getAttribute('href').startsWith('#') || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     menuNavigated = true;
     menuDialog.close();
     navigateTo(link.getAttribute('href'));
   });
-  settingsButton.addEventListener('click', () => settingsDialog.showModal());
-  settingsDialog.addEventListener('close', () => settingsButton.focus({ preventScroll: true }));
-  settingsDialog.addEventListener('click', event => dismissOnBackdrop(settingsDialog, event));
-  languageSelect.addEventListener('change', () => {
-    const selected = languageSelect.value;
-    if (selected !== 'es' && selected !== 'en') return;
-    language = selected;
-    try { window.localStorage.setItem(storageKey, language); } catch { /* Optional persistence. */ }
-    render();
-  });
-  // elements['step-markers'].addEventListener('click', event => {
-  //   const marker = event.target.closest('button[data-page-index]');
-  //   if (!marker || current.view !== 'rosario') return;
-  //   const index = Number(marker.dataset.pageIndex);
-  //   if (Number.isInteger(index) && index >= 0 && index < routes.length) navigateTo(`#${routes[index]}`);
-  // });
-  elements['next-button'].addEventListener('click', () => {
-    if (current.view === 'rosario' && current.index < routes.length - 1) navigateTo(`#${routes[current.index + 1]}`);
-  });
+  for (const id of ['next-button', 'top-next-button']) {
+    elements[id].addEventListener('click', () => {
+      if (current.view === 'rosario' && current.index < routes.length - 1) navigateTo(`#${routes[current.index + 1]}`);
+    });
+  }
   elements['home-button'].addEventListener('click', () => navigateTo('#inicio'));
   document.querySelector('.skip-link').addEventListener('click', event => {
     event.preventDefault();
